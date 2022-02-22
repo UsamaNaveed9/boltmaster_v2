@@ -159,14 +159,17 @@ def get_items(filters):
 			.format(" and ".join(conditions)), filters)
 
 	row = frappe.db.sql("""
-		select
-			`tabSales Invoice Item`.name, `tabSales Invoice Item`.parent,
+		SELECT
+			`tabSales Invoice Item`.name,
+			`tabSales Invoice Item`.parent,
 			`tabSales Invoice Item`.item_code,
 			`tabSales Invoice Item`.base_net_rate,
 			`tabSales Invoice Item`.base_net_amount,
 			`tabSales Invoice`.customer_name
-		from `tabSales Invoice`, `tabSales Invoice Item`
-		where `tabSales Invoice`.name = `tabSales Invoice Item`.parent
+		FROM
+			`tabSales Invoice`, `tabSales Invoice Item`
+		WHERE
+			`tabSales Invoice`.name = `tabSales Invoice Item`.parent
 			and `tabSales Invoice`.docstatus = 1
 		""".format(sle_conditions=get_sle_conditions(filters),sle_conditions=get_sle_conditions(filters)),
 		filters, as_dict=1) #nosec		
