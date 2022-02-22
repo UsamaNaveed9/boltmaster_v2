@@ -17,9 +17,9 @@ def execute(filters=None):
 	is_reposting_item_valuation_in_progress()
 	include_uom = filters.get("include_uom")
 	columns = get_columns()
-	items, row = get_items(filters)
+	items = get_items(filters)
 	sl_entries = get_stock_ledger_entries(filters, items)
-	item_details = get_item_details(items, sl_entries, include_uom, row)
+	item_details = get_item_details(items, sl_entries, include_uom)
 	opening_row = get_opening_balance(filters, columns, sl_entries)
 	precision = cint(frappe.db.get_single_value("System Settings", "float_precision"))
 
@@ -101,10 +101,10 @@ def get_columns():
 		{"label": _("Incoming Rate"), "fieldname": "incoming_rate", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency", "convertible": "rate"},
 		{"label": _("Valuation Rate"), "fieldname": "valuation_rate", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency", "convertible": "rate"},
 		{"label": _("Balance Value"), "fieldname": "stock_value", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency"},
-		{"label": _("Voucher Type"), "fieldname": "voucher_type", "width": 110},
-		{"label": _("Customer"), "fieldname": "customer", "fieldtype": "Link", "options": "Customer", "width": 110},
-		{"label": _("Rate"), "fieldname": "rate", "width": 110},
-		{"lable": _("Amount"), "fieldname": "amount", "width": 110}
+		{"label": _("Voucher Type"), "fieldname": "voucher_type", "width": 110}
+		#{"label": _("Customer"), "fieldname": "customer", "fieldtype": "Link", "options": "Customer", "width": 110},
+		#{"label": _("Rate"), "fieldname": "rate", "width": 110},
+		#{"lable": _("Amount"), "fieldname": "amount", "width": 110}
 	]
 
 	return columns
@@ -158,25 +158,10 @@ def get_items(filters):
 		items = frappe.db.sql_list("""select name from `tabItem` item where {}"""
 			.format(" and ".join(conditions)), filters)
 
-	row = frappe.db.sql("""
-		SELECT
-			`tabSales Invoice Item`.name,
-			`tabSales Invoice Item`.parent,
-			`tabSales Invoice Item`.item_code,
-			`tabSales Invoice Item`.base_net_rate,
-			`tabSales Invoice Item`.base_net_amount,
-			`tabSales Invoice`.customer_name
-		FROM
-			`tabSales Invoice`, `tabSales Invoice Item`
-		WHERE
-			`tabSales Invoice`.name = `tabSales Invoice Item`.parent
-			and `tabSales Invoice`.docstatus = 1
-		""", as_dict=1)
-			
-	return items, row
+	return items
 
 
-def get_item_details(items, sl_entries, include_uom, row):
+def get_item_details(items, sl_entries, include_uom):
 	item_details = {}
 	if not items:
 		items = list(set(d.item_code for d in sl_entries))
@@ -202,12 +187,6 @@ def get_item_details(items, sl_entries, include_uom, row):
 
 	for item in res:
 		item_details.setdefault(item.name, item)
-
-	for item_d in row:
-		if item_details[item_d.item_code]:
-			item_details.setdefault(item_d.customer, item_d)
-			item_details.setdefault(item_d.base_net_rate, item_d)
-			item_details.setdefault(item_d.base_net_amount, item_d)
 
 	return item_details
 
