@@ -170,7 +170,7 @@ def get_items(filters):
 			`tabSales Invoice Item`.item_code,
 			`tabSales Invoice Item`.`item_name`,
 			`tabSales Invoice Item`.base_net_rate, `tabSales Invoice Item`.base_net_amount,
-			`tabSales Invoice`.customer_name,
+			`tabSales Invoice`.customer_name
 		from `tabSales Invoice`, `tabSales Invoice Item`
 		where `tabSales Invoice`.name = `tabSales Invoice Item`.parent
 			and `tabSales Invoice`.docstatus = 1 and `tabSales Invoice`.item_code = `tabStock Ledger Entry`.item_code
