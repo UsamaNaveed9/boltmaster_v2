@@ -13,6 +13,7 @@ from erpnext.stock.utils import (
 	update_included_uom_in_report,
 )
 
+
 def execute(filters=None):
 	is_reposting_item_valuation_in_progress()
 	include_uom = filters.get("include_uom")
@@ -101,7 +102,8 @@ def get_columns():
 		{"label": _("Incoming Rate"), "fieldname": "incoming_rate", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency", "convertible": "rate"},
 		{"label": _("Valuation Rate"), "fieldname": "valuation_rate", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency", "convertible": "rate"},
 		{"label": _("Balance Value"), "fieldname": "stock_value", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency"},
-		{"label": _("Voucher Type"), "fieldname": "voucher_type", "width": 110}
+		{"label": _("Voucher Type"), "fieldname": "voucher_type", "width": 110},
+		{"label": _("Voucher #"), "fieldname": "voucher_no", "fieldtype": "Dynamic Link", "options": "voucher_type", "width": 100}
 	]
 
 	return columns
@@ -154,7 +156,6 @@ def get_items(filters):
 	if conditions:
 		items = frappe.db.sql_list("""select name from `tabItem` item where {}"""
 			.format(" and ".join(conditions)), filters)
-
 	return items
 
 
@@ -174,7 +175,7 @@ def get_item_details(items, sl_entries, include_uom):
 
 	res = frappe.db.sql("""
 		select
-			item.name, item.item_name, item.stock_uom {cf_field}
+			item.name, item.item_name, item.description, item.item_group, item.brand, item.stock_uom {cf_field}
 		from
 			`tabItem` item
 			{cf_join}
