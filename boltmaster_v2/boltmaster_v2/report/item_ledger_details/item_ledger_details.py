@@ -205,7 +205,7 @@ def get_item_details(items, sl_entries, include_uom, row):
 			item_details.setdefault(item_d.customer, item_d)
 			item_details.setdefault(item_d.rate, item_d)
 			item_details.setdefault(item_d.amount, item_d)
-			
+
 	return item_details
 
 
