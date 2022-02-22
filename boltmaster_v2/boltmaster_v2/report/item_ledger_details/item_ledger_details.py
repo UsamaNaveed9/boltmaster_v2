@@ -18,7 +18,7 @@ def execute(filters=None):
 	is_reposting_item_valuation_in_progress()
 	include_uom = filters.get("include_uom")
 	columns = get_columns()
-	items = get_items(filters)
+	items, row = get_items(filters)
 	sl_entries = get_stock_ledger_entries(filters, items)
 	item_details = get_item_details(items, sl_entries, include_uom)
 	opening_row = get_opening_balance(filters, columns, sl_entries)
@@ -49,6 +49,12 @@ def execute(filters=None):
 			sle.update({
 				"qty_after_transaction": actual_qty,
 				"stock_value": stock_value
+			})
+		if item_detail == row[sle.item_code]:
+			sle.update({
+				"customer": row.customer_name,
+				"rate": row.base_net_rate,
+				"amount": row.base_net_amount
 			})
 
 		sle.update({
@@ -158,7 +164,20 @@ def get_items(filters):
 	if conditions:
 		items = frappe.db.sql_list("""select name from `tabItem` item where {}"""
 			.format(" and ".join(conditions)), filters)
-	return items
+
+	row = frappe.db.sql("""
+		select
+			`tabSales Invoice Item`.name, `tabSales Invoice Item`.parent,
+			`tabSales Invoice Item`.item_code,
+			`tabSales Invoice Item`.`item_name`,
+			`tabSales Invoice Item`.base_net_rate, `tabSales Invoice Item`.base_net_amount,
+			`tabSales Invoice`.customer_name,
+		from `tabSales Invoice`, `tabSales Invoice Item`
+		where `tabSales Invoice`.name = `tabSales Invoice Item`.parent
+			and `tabSales Invoice`.docstatus = 1 {1} and `tabSales Invoice`.item_code = `tabStock Ledger Entry`.item_code
+		""".format(" and ".join(conditions)),
+		filters, as_dict=1) #nosec		
+	return items, row
 
 
 def get_item_details(items, sl_entries, include_uom):
