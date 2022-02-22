@@ -173,7 +173,7 @@ def get_item_details(items, sl_entries, include_uom):
 
 	res = frappe.db.sql("""
 		select
-			item.name, item.item_name,  item.stock_uom {cf_field}
+			item.name, item.item_name, item.stock_uom {cf_field}
 		from
 			`tabItem` item
 			{cf_join}
