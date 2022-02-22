@@ -27,18 +27,6 @@ frappe.query_reports["Item Ledger Details"] = {
 			"reqd": 1
 		},
 		{
-			"fieldname":"warehouse",
-			"label": __("Warehouse"),
-			"fieldtype": "Link",
-			"options": "Warehouse",
-			"get_query": function() {
-				const company = frappe.query_report.get_filter_value('company');
-				return {
-					filters: { 'company': company }
-				}
-			}
-		},
-		{
 			"fieldname":"item_code",
 			"label": __("Item"),
 			"fieldtype": "Link",
@@ -48,11 +36,6 @@ frappe.query_reports["Item Ledger Details"] = {
 					query: "erpnext.controllers.queries.item_query"
 				}
 			}
-		},
-		{
-			"fieldname":"voucher_no",
-			"label": __("Voucher #"),
-			"fieldtype": "Data"
 		},
 	],
 	"formatter": function (value, row, column, data, default_formatter) {
