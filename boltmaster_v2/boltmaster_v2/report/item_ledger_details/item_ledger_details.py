@@ -124,7 +124,7 @@ def get_stock_ledger_entries(filters, items):
 			valuation_rate,
 			stock_value,
 			voucher_type,
-			voucher_no,
+			voucher_no
 		FROM
 			`tabStock Ledger Entry` sle
 		WHERE
@@ -173,7 +173,7 @@ def get_item_details(items, sl_entries, include_uom):
 
 	res = frappe.db.sql("""
 		select
-			item.name, item.item_name, item.description, item.item_group, item.brand, item.stock_uom {cf_field}
+			item.name, item.item_name,  item.stock_uom {cf_field}
 		from
 			`tabItem` item
 			{cf_join}
