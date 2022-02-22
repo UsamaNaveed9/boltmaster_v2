@@ -173,7 +173,7 @@ def get_items(filters):
 			`tabSales Invoice`.customer_name
 		from `tabSales Invoice`, `tabSales Invoice Item`
 		where `tabSales Invoice`.name = `tabSales Invoice Item`.parent
-			and `tabSales Invoice`.docstatus = 1 and `tabSales Invoice`.item_code = `tabStock Ledger Entry`.item_code
+			and `tabSales Invoice`.docstatus = 1 and `tabSales Invoice Item`.item_code = `tabStock Ledger Entry`.item_code
 		""".format(sle_conditions=get_sle_conditions(filters)),
 		filters, as_dict=1) #nosec		
 	return items, row
