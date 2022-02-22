@@ -102,9 +102,6 @@ def get_columns():
 		{"label": _("Valuation Rate"), "fieldname": "valuation_rate", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency", "convertible": "rate"},
 		{"label": _("Balance Value"), "fieldname": "stock_value", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency"},
 		{"label": _("Voucher Type"), "fieldname": "voucher_type", "width": 110}
-		#{"label": _("Customer"), "fieldname": "customer", "fieldtype": "Link", "options": "Customer", "width": 110},
-		#{"label": _("Rate"), "fieldname": "rate", "width": 110},
-		#{"lable": _("Amount"), "fieldname": "amount", "width": 110}
 	]
 
 	return columns
