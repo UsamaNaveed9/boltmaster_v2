@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include boltmaster_v2 *.css
+recursive-include boltmaster_v2 *.csv
+recursive-include boltmaster_v2 *.html
+recursive-include boltmaster_v2 *.ico
+recursive-include boltmaster_v2 *.js
+recursive-include boltmaster_v2 *.json
+recursive-include boltmaster_v2 *.md
+recursive-include boltmaster_v2 *.png
+recursive-include boltmaster_v2 *.py
+recursive-include boltmaster_v2 *.svg
+recursive-include boltmaster_v2 *.txt
+recursive-exclude boltmaster_v2 *.pyc
