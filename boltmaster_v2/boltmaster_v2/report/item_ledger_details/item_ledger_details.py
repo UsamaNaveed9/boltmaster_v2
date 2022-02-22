@@ -171,7 +171,7 @@ def get_items(filters):
 		WHERE
 			`tabSales Invoice`.name = `tabSales Invoice Item`.parent
 			and `tabSales Invoice`.docstatus = 1
-		""".format(sle_conditions=get_sle_conditions(filters),sle_conditions=get_sle_conditions(filters)),
+		""".format(sle_conditions=get_sle_conditions(filters), sle_conditions=get_sle_conditions(filters), sle_conditions=get_sle_conditions(filters)),
 		filters, as_dict=1) #nosec		
 	return items, row
 
