@@ -167,7 +167,7 @@ def get_items(filters):
 			`tabSales Invoice`.customer_name
 		from `tabSales Invoice`, `tabSales Invoice Item`
 		where `tabSales Invoice`.name = `tabSales Invoice Item`.parent
-			and `tabSales Invoice`.docstatus = 1 and `tabSales Invoice Item`.item_code = `tabStock Ledger Entry`.item_code
+			and `tabSales Invoice`.docstatus = 1
 		""".format(sle_conditions=get_sle_conditions(filters)),
 		filters, as_dict=1) #nosec		
 	return items, row
@@ -203,8 +203,8 @@ def get_item_details(items, sl_entries, include_uom, row):
 	for item_d in row:
 		if item_details[item_d.item_code]:
 			item_details.setdefault(item_d.customer, item_d)
-			item_details.setdefault(item_d.rate, item_d)
-			item_details.setdefault(item_d.amount, item_d)
+			item_details.setdefault(item_d.base_net_rate, item_d)
+			item_details.setdefault(item_d.base_net_amount, item_d)
 
 	return item_details
 
