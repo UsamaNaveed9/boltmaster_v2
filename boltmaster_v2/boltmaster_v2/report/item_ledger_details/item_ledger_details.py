@@ -19,7 +19,7 @@ def execute(filters=None):
 	columns = get_columns()
 	items, row = get_items(filters)
 	sl_entries = get_stock_ledger_entries(filters, items)
-	item_details = get_item_details(items, sl_entries, include_uom)
+	item_details = get_item_details(items, sl_entries, include_uom, row)
 	opening_row = get_opening_balance(filters, columns, sl_entries)
 	precision = cint(frappe.db.get_single_value("System Settings", "float_precision"))
 
@@ -48,12 +48,6 @@ def execute(filters=None):
 			sle.update({
 				"qty_after_transaction": actual_qty,
 				"stock_value": stock_value
-			})
-		if item_detail == row[sle.item_code]:
-			sle.update({
-				"customer": row.customer_name,
-				"rate": row.base_net_rate,
-				"amount": row.base_net_amount
 			})
 
 		sle.update({
@@ -179,7 +173,7 @@ def get_items(filters):
 	return items, row
 
 
-def get_item_details(items, sl_entries, include_uom):
+def get_item_details(items, sl_entries, include_uom, row):
 	item_details = {}
 	if not items:
 		items = list(set(d.item_code for d in sl_entries))
@@ -206,6 +200,12 @@ def get_item_details(items, sl_entries, include_uom):
 	for item in res:
 		item_details.setdefault(item.name, item)
 
+	for item_d in row:
+		if item_details[item_d.item_code]:
+			item_details.setdefault(item_d.customer, item_d)
+			item_details.setdefault(item_d.rate, item_d)
+			item_details.setdefault(item_d.amount, item_d)
+			
 	return item_details
 
 
