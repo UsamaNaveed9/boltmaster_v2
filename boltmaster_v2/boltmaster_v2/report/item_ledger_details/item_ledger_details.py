@@ -103,7 +103,8 @@ def get_columns():
 		{"label": _("Valuation Rate"), "fieldname": "valuation_rate", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency", "convertible": "rate"},
 		{"label": _("Balance Value"), "fieldname": "stock_value", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency"},
 		{"label": _("Voucher Type"), "fieldname": "voucher_type", "width": 110},
-		{"label": _("Voucher #"), "fieldname": "voucher_no", "fieldtype": "Dynamic Link", "options": "voucher_type", "width": 100}
+		{"label": _("Voucher #"), "fieldname": "voucher_no", "fieldtype": "Dynamic Link", "options": "voucher_type", "width": 100},
+		{"label": _("Rate"), "fieldname": "rate", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency"}
 	]
 
 	return columns
@@ -139,6 +140,13 @@ def get_stock_ledger_entries(filters, items):
 			posting_date asc, posting_time asc, creation asc
 		""".format(sle_conditions=get_sle_conditions(filters), item_conditions_sql=item_conditions_sql),
 		filters, as_dict=1)
+
+	for s in sl_entries:
+		if s.voucher_type == "Sales Invoice":
+			rate = frappe.db.sql("""SELECT si_item.base_rate 
+							FROM `tabSales Invoice` si, `tabSales Invoice Item` si_item
+			 				WHERE si.name = si_item.parent AND si.name = s.voucher_no AND si_item.item_code = s.item_code  """)
+		sl_entries["rate"] = rate					 
 
 	return sl_entries
 
