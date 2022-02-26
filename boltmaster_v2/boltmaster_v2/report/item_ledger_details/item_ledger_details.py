@@ -145,7 +145,7 @@ def get_stock_ledger_entries(filters, items):
 		if s.voucher_type == "Sales Invoice":
 			rate = frappe.db.sql("""SELECT si_item.base_rate 
 							FROM `tabSales Invoice` si, `tabSales Invoice Item` si_item
-			 				WHERE si.name = si_item.parent AND si.name = %(s.voucher_no)s AND si_item.item_code = %(s.item_code)s  """)
+			 				WHERE si.name = si_item.parent AND si.name in %(s.voucher_no)s AND si_item.item_code in %(s.item_code)s  """)
 		sl_entries["rate"] = rate					 
 
 	return sl_entries
