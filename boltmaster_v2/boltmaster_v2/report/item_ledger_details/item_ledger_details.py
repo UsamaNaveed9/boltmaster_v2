@@ -65,6 +65,10 @@ def execute(filters=None):
 			conversion_factors.append(item_detail.conversion_factor)
 
 	update_included_uom_in_report(columns, data, include_uom, conversion_factors)
+	for rec in data:
+		if rec.voucher_type == "Sales Invoice":
+			rec["rate"] = frappe.db.get_value("Sales Invoice Item", {"item_code":rec.item_code,"parent":rec.voucher_no},"base_rate")	
+
 	return columns, data
 
 def update_available_serial_nos(available_serial_nos, sle):
@@ -140,14 +144,7 @@ def get_stock_ledger_entries(filters, items):
 			posting_date asc, posting_time asc, creation asc
 		""".format(sle_conditions=get_sle_conditions(filters), item_conditions_sql=item_conditions_sql),
 		filters, as_dict=1)
-
-	for s in sl_entries:
-		if s.voucher_type == "Sales Invoice":
-			rate = frappe.db.sql("""SELECT si_item.base_rate 
-							FROM `tabSales Invoice` si, `tabSales Invoice Item` si_item
-			 				WHERE si.name = si_item.parent AND si.name in {s.voucher_no} AND si_item.item_code in {s.item_code}  """)
-		sl_entries["rate"] = rate					 
-
+				 
 	return sl_entries
 
 
