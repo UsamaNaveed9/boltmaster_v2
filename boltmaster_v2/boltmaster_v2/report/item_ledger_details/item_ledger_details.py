@@ -65,9 +65,16 @@ def execute(filters=None):
 			conversion_factors.append(item_detail.conversion_factor)
 
 	update_included_uom_in_report(columns, data, include_uom, conversion_factors)
+	
 	for rec in data:
 		if rec.voucher_type == "Sales Invoice":
-			rec["rate"] = frappe.db.get_value("Sales Invoice Item", {"item_code":rec.item_code,"parent":rec.voucher_no},"base_rate")	
+			rec["customer"] = frappe.db.get_value("Sales Invoice", {"name":rec.voucher_no}, "customer")
+			rec["rate"] = frappe.db.get_value("Sales Invoice Item", {"item_code":rec.item_code,"parent":rec.voucher_no},"base_rate")
+			rec["amount"] = frappe.db.get_value("Sales Invoice Item", {"item_code":rec.item_code,"parent":rec.voucher_no},"base_amount")
+		elif rec.voucher_type == "Delivery Note":
+			rec["customer"] = frappe.db.get_value("Delivery Note", {"name":rec.voucher_no}, "customer")
+		elif rec.voucher_type == "Purchase Invoice":
+			rec["supplier"] = frappe.db.get_value("Purchase Invoice", {"name":rec.voucher_no}, "supplier")		
 
 	return columns, data
 
@@ -108,7 +115,10 @@ def get_columns():
 		{"label": _("Balance Value"), "fieldname": "stock_value", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency"},
 		{"label": _("Voucher Type"), "fieldname": "voucher_type", "width": 110},
 		{"label": _("Voucher #"), "fieldname": "voucher_no", "fieldtype": "Dynamic Link", "options": "voucher_type", "width": 100},
-		{"label": _("Rate"), "fieldname": "rate", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency"}
+		{"label": _("Supplier"), "fieldname": "supplier", "fieldtype": "Link", "options": "Supplier", "width": 120},
+		{"label": _("Customer"), "fieldname": "customer", "fieldtype": "Link", "options": "Customer", "width": 120},
+		{"label": _("Rate"), "fieldname": "rate", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency"},
+		{"label": _("Amount"), "fieldname": "amount", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency"}
 	]
 
 	return columns
