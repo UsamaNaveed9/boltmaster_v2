@@ -74,6 +74,11 @@ def execute(filters=None):
 			rec["amount"] = frappe.db.get_value("Sales Invoice Item", {"item_code":rec.item_code,"parent":rec.voucher_no},"base_amount")
 		elif rec.voucher_type == "Delivery Note":
 			rec["customer"] = frappe.db.get_value("Delivery Note", {"name":rec.voucher_no}, "customer")
+			childrec = frappe.db.get_list("Sales Invoice Item", pluck="name", filters={"delivery_note":rec.voucher_no})
+			parentrec = childrec.get_parent()
+			rec["sales_uom"] = frappe.db.get_value("Sales Invoice Item", {"item_code":rec.item_code, "parent":parentrec},"uom")
+			rec["rate"] = frappe.db.get_value("Sales Invoice Item", {"item_code":rec.item_code,"parent":parentrec},"base_rate")
+			rec["amount"] = frappe.db.get_value("Sales Invoice Item", {"item_code":rec.item_code,"parent":parentrec},"base_amount")
 		elif rec.voucher_type == "Purchase Invoice":
 			rec["supplier"] = frappe.db.get_value("Purchase Invoice", {"name":rec.voucher_no}, "supplier")		
 
