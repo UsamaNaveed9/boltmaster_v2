@@ -69,6 +69,7 @@ def execute(filters=None):
 	for rec in data:
 		if rec.voucher_type == "Sales Invoice":
 			rec["customer"] = frappe.db.get_value("Sales Invoice", {"name":rec.voucher_no}, "customer")
+			rec["sales_uom"] = frappe.db.get_value("Sales Invoice Item", {"item_code":rec.item_code, "parent":rec.voucher_no},"uom")
 			rec["rate"] = frappe.db.get_value("Sales Invoice Item", {"item_code":rec.item_code,"parent":rec.voucher_no},"base_rate")
 			rec["amount"] = frappe.db.get_value("Sales Invoice Item", {"item_code":rec.item_code,"parent":rec.voucher_no},"base_amount")
 		elif rec.voucher_type == "Delivery Note":
@@ -117,6 +118,7 @@ def get_columns():
 		{"label": _("Voucher #"), "fieldname": "voucher_no", "fieldtype": "Dynamic Link", "options": "voucher_type", "width": 100},
 		{"label": _("Supplier"), "fieldname": "supplier", "fieldtype": "Link", "options": "Supplier", "width": 120},
 		{"label": _("Customer"), "fieldname": "customer", "fieldtype": "Link", "options": "Customer", "width": 120},
+		{"label": _("Sales UOM"), "fieldname": "sales_uom", "fieldtype": "Link", "options": "UOM", "width": 90},
 		{"label": _("Rate"), "fieldname": "rate", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency"},
 		{"label": _("Amount"), "fieldname": "amount", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency"}
 	]
