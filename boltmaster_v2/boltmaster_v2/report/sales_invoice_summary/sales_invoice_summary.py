@@ -74,7 +74,7 @@ def _execute(filters, additional_table_columns=None, additional_query_columns=No
 
 		#multiple delivery notes
 		for d in frappe.db.get_list("Sales Invoice Item", filters={"parent": inv.name}, fields=["delivery_note"]):
-			if row["delivery_note"] != d:
+			if row["delivery_note"] != d.delivery_note:
 				row.update({
 					'delivery_note': ", ".join(d)
 				})
