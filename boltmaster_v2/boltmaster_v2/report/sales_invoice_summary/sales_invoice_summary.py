@@ -73,12 +73,14 @@ def _execute(filters, additional_table_columns=None, additional_query_columns=No
 		})
 
 		#multiple delivery notes
+		note = row['delivery_note']
 		for d in frappe.db.get_list("Sales Invoice Item", filters={"parent": inv.name}, fields=["delivery_note"]):
-			if row["delivery_note"] != d.delivery_note:
-				row.update({
-					'delivery_note': ", " + (d.delivery_note)
-				})
+			if row['delivery_note'] != d.delivery_note:
+				note = note + ", " + d.delivery_note
 
+		row.update({
+			'delivery_note': note
+		})
 		# map income values
 		base_net_total = 0
 		for income_acc in income_accounts:
