@@ -136,26 +136,26 @@ def get_columns(invoice_list, additional_table_columns):
 			'fieldname': 'invoice',
 			'fieldtype': 'Link',
 			'options': 'Sales Invoice',
-			'width': 120
+			'width': 165
 		},
 		{
 			'label': _("Posting Date"),
 			'fieldname': 'posting_date',
 			'fieldtype': 'Date',
-			'width': 80
+			'width': 120
 		},
 		{
 			'label': _("Customer"),
 			'fieldname': 'customer',
 			'fieldtype': 'Link',
 			'options': 'Customer',
-			'width': 120
+			'width': 300
 		},
 		{
 			'label': _("Customer Name"),
 			'fieldname': 'customer_name',
 			'fieldtype': 'Data',
-			'width': 120
+			'width': 150
 		},
 	]
 
@@ -227,7 +227,7 @@ def get_columns(invoice_list, additional_table_columns):
 			'fieldname': 'delivery_note',
 			'fieldtype': 'Link',
 			'options': 'Delivery Note',
-			'width': 100
+			'width': 180
 		},
 		{
 			'label': _("Cost Center"),
