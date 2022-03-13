@@ -73,6 +73,7 @@ def execute(filters=None):
 			rec["rate"] = frappe.db.get_value("Sales Invoice Item", {"item_code":rec.item_code,"parent":rec.voucher_no},"base_rate")
 			rec["amount"] = frappe.db.get_value("Sales Invoice Item", {"item_code":rec.item_code,"parent":rec.voucher_no},"base_amount")
 		elif rec.voucher_type == "Delivery Note":
+			rec["linked_voucher"] = frappe.db.get_value("Sales Invoice Item", {"item_code":rec.item_code, "delivery_note":rec.voucher_no}, "parent")
 			rec["customer"] = frappe.db.get_value("Delivery Note", {"name":rec.voucher_no}, "customer")
 			rec["sales_uom"] = frappe.db.get_value("Sales Invoice Item", {"item_code":rec.item_code, "delivery_note":rec.voucher_no},"uom")
 			rec["rate"] = frappe.db.get_value("Sales Invoice Item", {"item_code":rec.item_code, "delivery_note":rec.voucher_no},"base_rate")
@@ -119,6 +120,7 @@ def get_columns():
 		{"label": _("Balance Value"), "fieldname": "stock_value", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency"},
 		{"label": _("Voucher Type"), "fieldname": "voucher_type", "width": 110},
 		{"label": _("Voucher #"), "fieldname": "voucher_no", "fieldtype": "Dynamic Link", "options": "voucher_type", "width": 100},
+		{"label": _("Linked Voucher"), "fieldname": "linked_voucher", "fieldtype": "Link", "options": "Sales Invoice", "width": 100},
 		{"label": _("Supplier"), "fieldname": "supplier", "fieldtype": "Link", "options": "Supplier", "width": 120},
 		{"label": _("Customer"), "fieldname": "customer", "fieldtype": "Link", "options": "Customer", "width": 120},
 		{"label": _("Sales UOM"), "fieldname": "sales_uom", "fieldtype": "Link", "options": "UOM", "width": 90},
