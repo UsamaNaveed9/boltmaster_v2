@@ -72,8 +72,8 @@
                 <div class="col-xs-12">
                     <div class="row section-break">
                         <div class="col-xs-12">
-			    {% if(report.report_name === "Accounts Receivable V2") { %}
-			    <h2 class="text-center" style="margin-top:0">{%= __("Accounts Receivable") %}</h2> 
+			    {% if(report.report_name === "Accounts Payable V2") { %}
+			    <h2 class="text-center" style="margin-top:0">{%= __("Accounts Payable") %}</h2> 
 			    {% } %}
 
                             <h4 class="text-center">
@@ -94,10 +94,9 @@
                             <table class="table table-bordered" width=100% align="center">
                                 <thead>
                                 <tr>
-                                    {% if(report.report_name === "Accounts Receivable V2" || report.report_name === "Accounts Payable") { %}
+                                    {% if(report.report_name === "Accounts Receivable V2" || report.report_name === "Accounts Payable V2") { %}
                                     <th style="width: 10%; text-align: center">{%= __("Date") %}</th>
 				    <th style="width: 10%; text-align: center">{%= __("Voucher Type") %}</th>
-				    <th style="width: 15%; text-align: center">{%= __("Voucher No") %}</th>
                                     <th style="width: 10%; text-align: center">{%= __("LPO No") %}</th>
 
                                     <th style="width: 10%; text-align: center">{%= __("Invoiced Amount") %}</th>
@@ -126,7 +125,7 @@
                                 <tbody>
                                 {% for(var i=0, l=data.length; i<l; i++) { %}
                                 <tr>
-                                    {% if(report.report_name === "Accounts Receivable V2" || report.report_name === "Accounts Payable") { %}
+                                    {% if(report.report_name === "Accounts Receivable V2" || report.report_name === "Accounts Payable V2") { %}
                                     {% if(data[i]["party"]) { %}
                                     <td>{%= frappe.datetime.str_to_user(data[i]["posting_date"]) %}</td>
                                     <td>
@@ -134,13 +133,8 @@
                                         {%= data[i]["voucher_type"] %}
                                         {% } %}
                                     </td>
-				    <td>
-                                        {% if(!filters.show_future_payments) { %}
-                                        {%= data[i]["voucher_no"] %}
-                                        {% } %}
-                                    </td>
 
-                                    <td style="text-align: right">{%= data[i]["po_no"] %}</td>
+                                    <td style="text-align: right">{%= data[i]["bill_no"] %}</td>
 
                                     <td style="text-align: right">
                                         {%= format_currency(data[i]["invoiced"], data[i]["currency"]) %}</td>
@@ -171,7 +165,6 @@
                                     {% if(report.report_name === "Accounts Receivable V2" && filters.show_sales_person) { %}
                                     <td></td>
                                     {% } %}
-				    <td></td>
                                     <td style="text-align: right"><b>{%= __("Total") %}</b></td>
                                     <td style="text-align: right">
                                         {%= format_currency(data[i]["invoiced"], data[i]["currency"] ) %}</td>
