@@ -60,7 +60,8 @@
 <table width="100%">
     <thead>
     <tr>
-        <td width="100%">
+        <td class="header" width="100%">
+		<img src="/files/BmHeader.PNG">
         </td>
     </tr>
     </thead>
@@ -71,7 +72,10 @@
                 <div class="col-xs-12">
                     <div class="row section-break">
                         <div class="col-xs-12">
-                            <h2 class="text-center" style="margin-top:0">{%= __(report.report_name) %}</h2>
+			    {% if(report.report_name === "Accounts Receivable V2") { %}
+			    <h2 class="text-center" style="margin-top:0">{%= __("Accounts Receivable") %}</h2> 
+			    {% } %}
+
                             <h4 class="text-center">
                                 {% if (filters.customer_name) { %}
                                 {%= filters.customer_name %}
@@ -91,14 +95,9 @@
                                 <thead>
                                 <tr>
                                     {% if(report.report_name === "Accounts Receivable V2" || report.report_name === "Accounts Payable") { %}
-                                    <th style="width: 11%">{%= __("Date") %}</th>
-
-                                    {% if(report.report_name === "Accounts Receivable V2" && filters.show_sales_person) { %}
-                                    <th style="width: 14%">{%= __("Reference") %}</th>
-                                    <th style="width: 10%">{%= __("Sales Person") %}</th>
-                                    {% } else { %}
-                                    <th style="width: 22%">{%= __("Reference") %}</th>
-                                    {% } %}
+                                    <th style="width: 10%">{%= __("Date") %}</th>
+				    <th style="width: 10%">{%= __("Voucher Type") %}</th>
+				    <th style="width: 15%">{%= __("Voucher No") %}</th>
                                     <th style="width: 10%">{%= __("LPO No") %}</th>
 
                                     <th style="width: 10%; text-align: right">{%= __("Invoiced Amount") %}</th>
@@ -114,9 +113,6 @@
                                     <th style="width: 10%">{%= __("Future Payment Ref") %}</th>
                                     <th style="width: 10%">{%= __("Future Payment Amount") %}</th>
                                     <th style="width: 10%">{%= __("Remaining Balance") %}</th>
-                                    {% } %}
-                                    {% if(!filters.show_future_payments) { %}
-                                    <th style="width: 20%">{%= (filters.customer || filters.supplier) ? __("Remarks"): __("Party") %}</th>
                                     {% } %}
                                     {% } else { %}
                                     <th style="width: 40%">{%= (filters.customer || filters.supplier) ? __("Remarks"): __("Party") %}</th>
@@ -136,17 +132,15 @@
                                     <td>
                                         {% if(!filters.show_future_payments) { %}
                                         {%= data[i]["voucher_type"] %}
-                                        <br>
                                         {% } %}
-                                        {%= data[i]["voucher_no"] %}
                                     </td>
+				    <td>
+                                        {% if(!filters.show_future_payments) { %}
+                                        {%= data[i]["voucher_no"] %}
+                                        {% } %}
+                                    </td>
+
                                     <td style="text-align: right">{%= data[i]["po_no"] %}</td>
-
-                                    {% if(report.report_name === "Accounts Receivable V2" && filters.show_sales_person) { %}
-                                    <td>{%= data[i]["sales_person"] %}</td>
-                                    {% } %}
-
-
 
                                     <td style="text-align: right">
                                         {%= format_currency(data[i]["invoiced"], data[i]["currency"]) %}</td>
@@ -169,24 +163,6 @@
                                     <td style="text-align: right">{%= format_currency(data[i]["future_amount"], data[i]["currency"]) %}</td>
                                     <td style="text-align: right">{%= format_currency(data[i]["remaining_balance"], data[i]["currency"]) %}</td>
                                     {% } %}
-                                    {% if(!filters.show_future_payments) { %}
-                                    <td>
-                                        {% if(!(filters.customer || filters.supplier)) { %}
-                                        {%= data[i]["party"] %}
-                                        {% if(data[i]["customer_name"] && data[i]["customer_name"] != data[i]["party"]) { %}
-                                        <br> {%= data[i]["customer_name"] %}
-                                        {% } else if(data[i]["supplier_name"] != data[i]["party"]) { %}
-                                        <br> {%= data[i]["supplier_name"] %}
-                                        {% } %}
-                                        {% } %}
-                                        <div>
-                                            {% if data[i]["remarks"] %}
-                                            {%= __("Remarks") %}:
-                                            {%= data[i]["remarks"] %}
-                                            {% } %}
-                                        </div>
-                                    </td>
-                                    {% } %}
                                     {% } else { %}
                                     <td></td>
                                     {% if(!filters.show_future_payments) { %}
@@ -195,6 +171,7 @@
                                     {% if(report.report_name === "Accounts Receivable V2" && filters.show_sales_person) { %}
                                     <td></td>
                                     {% } %}
+				    <td></td>
                                     <td style="text-align: right"><b>{%= __("Total") %}</b></td>
                                     <td style="text-align: right">
                                         {%= format_currency(data[i]["invoiced"], data[i]["currency"] ) %}</td>
@@ -206,7 +183,6 @@
                                     {% } %}
                                     <td style="text-align: right">
                                         {%= format_currency(data[i]["outstanding"], data[i]["currency"]) %}</td>
-				    <td></td>
 
                                     {% if(filters.show_future_payments) { %}
                                     {% if(report.report_name === "Accounts Receivable V2") { %}
