@@ -95,31 +95,31 @@
                                 <thead>
                                 <tr>
                                     {% if(report.report_name === "Accounts Receivable V2" || report.report_name === "Accounts Payable") { %}
-                                    <th style="width: 10%">{%= __("Date") %}</th>
-				    <th style="width: 10%">{%= __("Voucher Type") %}</th>
-				    <th style="width: 15%">{%= __("Voucher No") %}</th>
-                                    <th style="width: 10%">{%= __("LPO No") %}</th>
+                                    <th style="width: 10%; text-align: center">{%= __("Date") %}</th>
+				    <th style="width: 10%; text-align: center">{%= __("Voucher Type") %}</th>
+				    <th style="width: 15%; text-align: center">{%= __("Voucher No") %}</th>
+                                    <th style="width: 10%; text-align: center">{%= __("LPO No") %}</th>
 
-                                    <th style="width: 10%; text-align: right">{%= __("Invoiced Amount") %}</th>
+                                    <th style="width: 10%; text-align: center">{%= __("Invoiced Amount") %}</th>
                                     {% if(!filters.show_future_payments) { %}
-                                    <th style="width: 10%; text-align: right">{%= __("Paid Amount") %}</th>
-                                    <th style="width: 10%; text-align: right">{%= report.report_name === "Accounts Receivable V2" ? __('Credit Note') : __('Debit Note') %}</th>
+                                    <th style="width: 10%; text-align: center">{%= __("Paid Amount") %}</th>
+                                    <th style="width: 10%; text-align: center">{%= report.report_name === "Accounts Receivable V2" ? __('Credit Note') : __('Debit Note') %}</th>
                                     {% } %}
-                                    <th style="width: 10%; text-align: right">{%= __("Outstanding Amount") %}</th>
+                                    <th style="width: 10%; text-align: center">{%= __("Outstanding Amount") %}</th>
                                     {% if(filters.show_future_payments) { %}
                                     {% if(report.report_name === "Accounts Receivable V2") { %}
-                                    <th style="width: 12%">{%= __("Customer LPO No.") %}</th>
+                                    <th style="width: 12%; text-align: center">{%= __("Customer LPO No.") %}</th>
                                     {% } %}
-                                    <th style="width: 10%">{%= __("Future Payment Ref") %}</th>
-                                    <th style="width: 10%">{%= __("Future Payment Amount") %}</th>
-                                    <th style="width: 10%">{%= __("Remaining Balance") %}</th>
+                                    <th style="width: 10%; text-align: center">{%= __("Future Payment Ref") %}</th>
+                                    <th style="width: 10%; text-align: center">{%= __("Future Payment Amount") %}</th>
+                                    <th style="width: 10%; text-align: center">{%= __("Remaining Balance") %}</th>
                                     {% } %}
                                     {% } else { %}
-                                    <th style="width: 40%">{%= (filters.customer || filters.supplier) ? __("Remarks"): __("Party") %}</th>
-                                    <th style="width: 15%">{%= __("Total Invoiced Amount") %}</th>
-                                    <th style="width: 15%">{%= __("Total Paid Amount") %}</th>
-                                    <th style="width: 15%">{%= report.report_name === "Accounts Receivable Summary" ? __('Credit Note Amount') : __('Debit Note Amount') %}</th>
-                                    <th style="width: 15%">{%= __("Total Outstanding Amount") %}</th>
+                                    <th style="width: 40%; text-align: center">{%= (filters.customer || filters.supplier) ? __("Remarks"): __("Party") %}</th>
+                                    <th style="width: 15%; text-align: center">{%= __("Total Invoiced Amount") %}</th>
+                                    <th style="width: 15%; text-align: center">{%= __("Total Paid Amount") %}</th>
+                                    <th style="width: 15%; text-align: center">{%= report.report_name === "Accounts Receivable Summary" ? __('Credit Note Amount') : __('Debit Note Amount') %}</th>
+                                    <th style="width: 15%; text-align: center">{%= __("Total Outstanding Amount") %}</th>
                                     {% } %}
                                 </tr>
                                 </thead>
