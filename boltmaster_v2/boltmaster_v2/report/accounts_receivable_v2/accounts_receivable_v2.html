@@ -160,13 +160,7 @@
                                     <td style="text-align: right">{%= format_currency(data[i]["remaining_balance"], data[i]["currency"]) %}</td>
                                     {% } %}
                                     {% } else { %}
-                                    <td></td>
-                                    {% if(!filters.show_future_payments) { %}
-                                    <td></td>
-                                    {% } %}
-                                    {% if(report.report_name === "Accounts Receivable V2" && filters.show_sales_person) { %}
-                                    <td></td>
-                                    {% } %}
+				    <td></td>
 				    <td></td>
                                     <td style="text-align: right"><b>{%= __("Total") %}</b></td>
                                     <td style="text-align: right">
@@ -179,7 +173,6 @@
                                     {% } %}
                                     <td style="text-align: right">
                                         {%= format_currency(data[i]["outstanding"], data[i]["currency"]) %}</td>
-				    <td><td>
                                     {% if(filters.show_future_payments) { %}
                                     {% if(report.report_name === "Accounts Receivable V2") { %}
                                     <td style="text-align: right">
