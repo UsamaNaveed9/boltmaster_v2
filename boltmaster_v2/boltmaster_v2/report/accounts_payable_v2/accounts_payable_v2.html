@@ -96,15 +96,15 @@
                                 <tr>
                                     {% if(report.report_name === "Accounts Receivable V2" || report.report_name === "Accounts Payable V2") { %}
                                     <th style="width: 10%; text-align: center">{%= __("Date") %}</th>
-				    <th style="width: 10%; text-align: center">{%= __("Voucher Type") %}</th>
+				    <th style="width: 15%; text-align: center">{%= __("Voucher Type") %}</th>
                                     <th style="width: 10%; text-align: center">{%= __("LPO No") %}</th>
 
-                                    <th style="width: 10%; text-align: center">{%= __("Invoiced Amount") %}</th>
+                                    <th style="width: 12%; text-align: center">{%= __("Invoiced Amount") %}</th>
                                     {% if(!filters.show_future_payments) { %}
-                                    <th style="width: 10%; text-align: center">{%= __("Paid Amount") %}</th>
-                                    <th style="width: 10%; text-align: center">{%= report.report_name === "Accounts Receivable V2" ? __('Credit Note') : __('Debit Note') %}</th>
+                                    <th style="width: 12%; text-align: center">{%= __("Paid Amount") %}</th>
+                                    <th style="width: 12%; text-align: center">{%= report.report_name === "Accounts Receivable V2" ? __('Credit Note') : __('Debit Note') %}</th>
                                     {% } %}
-                                    <th style="width: 10%; text-align: center">{%= __("Outstanding Amount") %}</th>
+                                    <th style="width: 12%; text-align: center">{%= __("Outstanding Amount") %}</th>
                                     {% if(filters.show_future_payments) { %}
                                     {% if(report.report_name === "Accounts Receivable V2") { %}
                                     <th style="width: 12%; text-align: center">{%= __("Customer LPO No.") %}</th>
