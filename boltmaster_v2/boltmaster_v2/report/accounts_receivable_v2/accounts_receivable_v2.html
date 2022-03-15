@@ -173,6 +173,7 @@
                                     {% } %}
                                     <td style="text-align: right">
                                         {%= format_currency(data[i]["outstanding"], data[i]["currency"]) %}</td>
+				    <td></td>	
                                     {% if(filters.show_future_payments) { %}
                                     {% if(report.report_name === "Accounts Receivable V2") { %}
                                     <td style="text-align: right">
