@@ -96,7 +96,6 @@
                                 <tr>
                                     {% if(report.report_name === "Accounts Receivable V2" || report.report_name === "Accounts Payable") { %}
                                     <th style="width: 10%; text-align: center">{%= __("Date") %}</th>
-				    <th style="width: 12%; text-align: center">{%= __("Voucher Type") %}</th>
 				    <th style="width: 19%; text-align: center">{%= __("Voucher No") %}</th>
                                     <th style="width: 9%; text-align: center">{%= __("LPO No") %}</th>
 
@@ -106,6 +105,7 @@
                                     <th style="width: 12%; text-align: center">{%= report.report_name === "Accounts Receivable V2" ? __('Credit Note') : __('Debit Note') %}</th>
                                     {% } %}
                                     <th style="width: 12%; text-align: center">{%= __("Outstanding Amount") %}</th>
+				    <th style="width: 12%; text-align: center">{%= __("Cumulative Balance") %}</th>
                                     {% if(filters.show_future_payments) { %}
                                     {% if(report.report_name === "Accounts Receivable V2") { %}
                                     <th style="width: 12%; text-align: center">{%= __("Customer LPO No.") %}</th>
@@ -129,11 +129,6 @@
                                     {% if(report.report_name === "Accounts Receivable V2" || report.report_name === "Accounts Payable") { %}
                                     {% if(data[i]["party"]) { %}
                                     <td>{%= frappe.datetime.str_to_user(data[i]["posting_date"]) %}</td>
-                                    <td>
-                                        {% if(!filters.show_future_payments) { %}
-                                        {%= data[i]["voucher_type"] %}
-                                        {% } %}
-                                    </td>
 				    <td>
                                         {% if(!filters.show_future_payments) { %}
                                         {%= data[i]["voucher_no"] %}
@@ -153,7 +148,8 @@
                                     {% } %}
                                     <td style="text-align: right">
                                         {%= format_currency(data[i]["outstanding"], data[i]["currency"]) %}</td>
-
+				    <td style="text-align: right">
+                                        {%= format_currency(data[i]["cumulative_balance"], data[i]["currency"]) %}</td>
                                     {% if(filters.show_future_payments) { %}
                                     {% if(report.report_name === "Accounts Receivable V2") { %}
                                     <td style="text-align: right">

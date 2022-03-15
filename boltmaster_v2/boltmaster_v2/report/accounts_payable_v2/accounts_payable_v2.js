@@ -141,5 +141,5 @@ frappe.query_reports["Accounts Payable V2"] = {
 	}
 }
 
-erpnext.utils.add_dimensions('Accounts Payable', 9);
+erpnext.utils.add_dimensions('Accounts Payable V2', 9);
 
