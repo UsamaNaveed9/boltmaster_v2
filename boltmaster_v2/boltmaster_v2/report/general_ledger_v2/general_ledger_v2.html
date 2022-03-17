@@ -121,8 +121,8 @@
 										{%= format_currency(data[i].credit, filters.presentation_currency) %}</td>
 									{% } else { %}
 									<td></td>
-									<td><b>{%= frappe.format(data[i].account, {fieldtype: "Link"}) || "&nbsp;" %}</b></td>
 									<td></td>
+									<td><b>{%= frappe.format(data[i].account, {fieldtype: "Link"}) || "&nbsp;" %}</b></td>
 									<td style="text-align: right">
 										{%= data[i].account && format_currency(data[i].debit, filters.presentation_currency) %}
 									</td>
