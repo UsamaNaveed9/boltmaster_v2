@@ -102,7 +102,7 @@
 								<tr>
 									<th style="width: 12%">{%= __("Date") %}</th>
 									<th style="width: 15%">{%= __("Ref") %}</th>
-									<th style="width: 15%">{%= __("Ref No") %}</th>
+									<th style="width: 18%">{%= __("Ref No") %}</th>
 									<th style="width: 15%">{%= __("Debit") %}</th>
 									<th style="width: 15%">{%= __("Credit") %}</th>
 									<th style="width: 18%">{%= __("Balance (Dr - Cr)") %}</th>
@@ -122,6 +122,7 @@
 									{% } else { %}
 									<td></td>
 									<td><b>{%= frappe.format(data[i].account, {fieldtype: "Link"}) || "&nbsp;" %}</b></td>
+									<td></td>
 									<td style="text-align: right">
 										{%= data[i].account && format_currency(data[i].debit, filters.presentation_currency) %}
 									</td>
