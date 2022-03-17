@@ -102,6 +102,7 @@
 								<tr>
 									<th style="width: 12%">{%= __("Date") %}</th>
 									<th style="width: 15%">{%= __("Ref") %}</th>
+									<th style="width: 15%">{%= __("Ref No") %}</th>
 									<th style="width: 15%">{%= __("Debit") %}</th>
 									<th style="width: 15%">{%= __("Credit") %}</th>
 									<th style="width: 18%">{%= __("Balance (Dr - Cr)") %}</th>
@@ -112,9 +113,8 @@
 								<tr>
 									{% if(data[i].posting_date) { %}
 									<td>{%= frappe.datetime.str_to_user(data[i].posting_date) %}</td>
-									<td>{%= data[i].voucher_type %}
-										<br>{%= data[i].voucher_no %}</td>
-
+									<td>{%= data[i].voucher_type %}</td>
+									<td>{%= data[i].voucher_no %}</td>
 									<td style="text-align: right">
 										{%= format_currency(data[i].debit, filters.presentation_currency) %}</td>
 									<td style="text-align: right">
