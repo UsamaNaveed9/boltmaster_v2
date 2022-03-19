@@ -105,6 +105,7 @@
                                     <th style="width: 12%; text-align: center">{%= report.report_name === "Accounts Receivable V2" ? __('Credit Note') : __('Debit Note') %}</th>
                                     {% } %}
                                     <th style="width: 12%; text-align: center">{%= __("Outstanding Amount") %}</th>
+				    <th style="width: 4%">{%= __("Age (Days)") %}</th>
                                     {% if(filters.show_future_payments) { %}
                                     {% if(report.report_name === "Accounts Receivable V2") { %}
                                     <th style="width: 12%; text-align: center">{%= __("Customer LPO No.") %}</th>
@@ -134,7 +135,7 @@
                                         {% } %}
                                     </td>
 
-                                    <td style="text-align: right">{%= data[i]["bill_no"] %}</td>
+                                    <td style="text-align: center">{%= data[i]["bill_no"] %}</td>
 
                                     <td style="text-align: right">
                                         {%= format_currency(data[i]["invoiced"], data[i]["currency"]) %}</td>
@@ -147,7 +148,7 @@
                                     {% } %}
                                     <td style="text-align: right">
                                         {%= format_currency(data[i]["outstanding"], data[i]["currency"]) %}</td>
-
+				    <td style="text-align: center">{%= data[i]["age"] %}</td>
                                     {% if(filters.show_future_payments) { %}
                                     {% if(report.report_name === "Accounts Receivable V2") { %}
                                     <td style="text-align: right">
@@ -176,7 +177,7 @@
                                     {% } %}
                                     <td style="text-align: right">
                                         {%= format_currency(data[i]["outstanding"], data[i]["currency"]) %}</td>
-
+				    <td></td>
                                     {% if(filters.show_future_payments) { %}
                                     {% if(report.report_name === "Accounts Receivable V2") { %}
                                     <td style="text-align: right">
