@@ -96,14 +96,15 @@
                                 <tr>
                                     {% if(report.report_name === "Accounts Receivable V2" || report.report_name === "Accounts Payable V2") { %}
                                     <th style="width: 11%; text-align: center">{%= __("Date") %}</th>
-                                    <th style="width: 15%; text-align: center">{%= __("Supplier Invoice No") %}</th>
-				    <th style="width: 12%; text-align: center">{%= __("LPO No") %}</th>
+                                    <th style="width: 13%; text-align: center">{%= __("Supplier Invoice No") %}</th>
+				    <th style="width: 10%; text-align: center">{%= __("LPO No") %}</th>
                                     <th style="width: 12%; text-align: center">{%= __("Invoiced Amount") %}</th>
                                     {% if(!filters.show_future_payments) { %}
                                     <th style="width: 12%; text-align: center">{%= __("Paid Amount") %}</th>
                                     <th style="width: 12%; text-align: center">{%= report.report_name === "Accounts Receivable V2" ? __('Credit Note') : __('Debit Note') %}</th>
                                     {% } %}
                                     <th style="width: 12%; text-align: center">{%= __("Outstanding Amount") %}</th>
+				    <th style="width: 11%; text-align: center">{%= __("Cumulative Balance") %}</th>
 				    <th style="width: 4%">{%= __("Age (Days)") %}</th>
                                     {% if(filters.show_future_payments) { %}
                                     {% if(report.report_name === "Accounts Receivable V2") { %}
@@ -142,6 +143,8 @@
                                     {% } %}
                                     <td style="text-align: right">
                                         {%= format_currency(data[i]["outstanding"], data[i]["currency"]) %}</td>
+				    <td style="text-align: right">
+                                        {%= format_currency(data[i]["cumulative_balance"], data[i]["currency"]) %}</td>
 				    <td style="text-align: center">{%= data[i]["age"] %}</td>
                                     {% if(filters.show_future_payments) { %}
                                     {% if(report.report_name === "Accounts Receivable V2") { %}
@@ -171,6 +174,7 @@
                                     {% } %}
                                     <td style="text-align: right">
                                         {%= format_currency(data[i]["outstanding"], data[i]["currency"]) %}</td>
+				    <td></td>
 				    <td></td>
                                     {% if(filters.show_future_payments) { %}
                                     {% if(report.report_name === "Accounts Receivable V2") { %}

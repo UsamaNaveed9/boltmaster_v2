@@ -36,6 +36,21 @@ class ReceivablePayableReport(object):
 		self.get_columns()
 		self.get_data()
 		self.get_chart_data()
+		cumulative = 0
+		if self.filters.group_by_party:
+			for i in range(len(self.data)):
+				if len(self.data[i]):
+					if 'voucher_no' in self.data[i]:
+						cumulative += self.data[i]['outstanding']
+						self.data[i]['cumulative_balance'] = cumulative
+					else:
+						self.data[i]['cumulative_balance'] = cumulative
+				else:
+					cumulative = 0
+		else:
+			for i in range(len(self.data)):
+				cumulative += self.data[i].outstanding
+				self.data[i]['cumulative_balance'] = cumulative
 		return self.columns, self.data, None, self.chart, None, self.skip_total_row
 
 	def set_defaults(self):
