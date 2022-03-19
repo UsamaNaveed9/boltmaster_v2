@@ -151,7 +151,7 @@
                                         {%= format_currency(data[i]["outstanding"], data[i]["currency"]) %}</td>
 				    <td style="text-align: right">
                                         {%= format_currency(data[i]["cumulative_balance"], data[i]["currency"]) %}</td>
-				    <td style="text-align: right">{%= data[i]["age"] %}</td>
+				    <td style="text-align: center">{%= data[i]["age"] %}</td>
                                     {% if(filters.show_future_payments) { %}
                                     {% if(report.report_name === "Accounts Receivable V2") { %}
                                     <td style="text-align: right">
