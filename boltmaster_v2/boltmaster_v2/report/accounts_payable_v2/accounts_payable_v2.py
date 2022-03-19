@@ -325,7 +325,7 @@ class ReceivablePayableReport(object):
 
 		if self.party_type == "Supplier":
 			for pi in frappe.db.sql("""
-				select name, due_date, bill_no, bill_date
+				select name, due_date, bill_no, bill_date, reference_number
 				from `tabPurchase Invoice`
 				where posting_date <= %s
 			""", self.filters.report_date, as_dict=1):
@@ -777,6 +777,7 @@ class ReceivablePayableReport(object):
 		if self.party_type == "Supplier":
 			self.add_column(label=_('Bill No'), fieldname='bill_no', fieldtype='Data')
 			self.add_column(label=_('Bill Date'), fieldname='bill_date', fieldtype='Date')
+			self.add_column(label=_('LPO No'), fieldname='reference_number', fieldtype='Data')
 
 		if self.filters.based_on_payment_terms:
 			self.add_column(label=_('Payment Term'), fieldname='payment_term', fieldtype='Data')

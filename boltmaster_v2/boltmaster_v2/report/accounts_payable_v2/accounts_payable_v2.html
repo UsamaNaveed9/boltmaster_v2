@@ -96,9 +96,8 @@
                                 <tr>
                                     {% if(report.report_name === "Accounts Receivable V2" || report.report_name === "Accounts Payable V2") { %}
                                     <th style="width: 11%; text-align: center">{%= __("Date") %}</th>
-				    <th style="width: 15%; text-align: center">{%= __("Voucher Type") %}</th>
-                                    <th style="width: 12%; text-align: center">{%= __("LPO No") %}</th>
-
+                                    <th style="width: 15%; text-align: center">{%= __("Supplier Invoice No") %}</th>
+				    <th style="width: 12%; text-align: center">{%= __("LPO No") %}</th>
                                     <th style="width: 12%; text-align: center">{%= __("Invoiced Amount") %}</th>
                                     {% if(!filters.show_future_payments) { %}
                                     <th style="width: 12%; text-align: center">{%= __("Paid Amount") %}</th>
@@ -129,14 +128,9 @@
                                     {% if(report.report_name === "Accounts Receivable V2" || report.report_name === "Accounts Payable V2") { %}
                                     {% if(data[i]["party"]) { %}
                                     <td>{%= frappe.datetime.str_to_user(data[i]["posting_date"]) %}</td>
-                                    <td>
-                                        {% if(!filters.show_future_payments) { %}
-                                        {%= data[i]["voucher_type"] %}
-                                        {% } %}
-                                    </td>
 
                                     <td style="text-align: center">{%= data[i]["bill_no"] %}</td>
-
+				    <td style="text-align: center">{%= data[i]["reference_number"] %}</td>
                                     <td style="text-align: right">
                                         {%= format_currency(data[i]["invoiced"], data[i]["currency"]) %}</td>
 
