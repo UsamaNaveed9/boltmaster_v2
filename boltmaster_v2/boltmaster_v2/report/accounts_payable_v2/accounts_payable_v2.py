@@ -51,17 +51,18 @@ class ReceivablePayableReport(object):
 			for i in range(len(self.data)):
 				cumulative += self.data[i].outstanding
 				self.data[i]['cumulative_balance'] = cumulative
-		for rec in self.data:
-			if not rec.reference_number:
+
+		for i in range(len(self.data)):
+			if not 'reference_number' in self.data[i]:
 				po = frappe.db.get_list('Purchase Invoice Item',
     					filters={
-        					'parent':rec.voucher_no
+        					'parent': self.data[i]['voucher_no']
     					},
     					fields=['purchase_order'],
     					as_list=True
 					)
 			if po:
-				self.rec["reference_number"]=po[0]
+				self.data[i]['reference_number'] = po[0]
 
 		return self.columns, self.data, None, self.chart, None, self.skip_total_row
 
