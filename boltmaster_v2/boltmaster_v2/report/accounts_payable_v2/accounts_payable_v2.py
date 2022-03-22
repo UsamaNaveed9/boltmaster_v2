@@ -62,8 +62,7 @@ class ReceivablePayableReport(object):
     					as_list=True
 					)
 			if po:
-				for no in po:
-					po_no = no
+				po_no = po[0][0]
 				rec["reference_number"]=po_no
 
 		return self.columns, self.data, None, self.chart, None, self.skip_total_row
