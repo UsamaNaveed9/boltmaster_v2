@@ -120,7 +120,7 @@ def get_columns():
 		{"label": _("Balance Value"), "fieldname": "stock_value", "fieldtype": "Currency", "width": 110, "options": "Company:company:default_currency"},
 		{"label": _("Voucher Type"), "fieldname": "voucher_type", "width": 110},
 		{"label": _("Voucher #"), "fieldname": "voucher_no", "fieldtype": "Dynamic Link", "options": "voucher_type", "width": 100},
-		{"label": _("Linked Voucher"), "fieldname": "linked_voucher", "fieldtype": "Link", "options": "Sales Invoice", "width": 100},
+		{"label": _("Linked Voucher"), "fieldname": "linked_voucher", "fieldtype": "Link", "options": "Sales Invoice", "width": 130},
 		{"label": _("Supplier"), "fieldname": "supplier", "fieldtype": "Link", "options": "Supplier", "width": 120},
 		{"label": _("Customer"), "fieldname": "customer", "fieldtype": "Link", "options": "Customer", "width": 120},
 		{"label": _("Sales UOM"), "fieldname": "sales_uom", "fieldtype": "Link", "options": "UOM", "width": 90},
