@@ -37,6 +37,7 @@ class ReceivablePayableReport(object):
 		self.get_data()
 		self.get_chart_data()
 		cumulative = 0
+		po = {}
 		if self.filters.group_by_party:
 			for i in range(len(self.data)):
 				if len(self.data[i]):
