@@ -821,6 +821,7 @@ class ReceivablePayableReport(object):
 			# note: fieldname is still `credit_note`
 			self.add_column(_('Debit Note'), fieldname='credit_note')
 		self.add_column(_('Outstanding Amount'), fieldname='outstanding')
+		self.add_column(_('Cumulative Balance'), fieldname='cumulative_balance')
 
 		self.setup_ageing_columns()
 
